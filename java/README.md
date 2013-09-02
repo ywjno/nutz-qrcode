@@ -48,7 +48,7 @@ format.setSize(400) // 设置图片大小
     .setForeGroundColor("#2F4F4F") // 设置前景色
     .setBackGroundColor("#808080") // 设置背景色
     .setImageFormat("png") // 设置生成的图片格式
-    .setMargin(0) // 设置图片空白区域, 单位iwei格（外填充）
+    .setMargin(0) // 设置图片空白区域, 单位 - 格（外填充）
 
 // 然后
 // 使用指定的生成器格式生成一个 QRCode 的图像对象
