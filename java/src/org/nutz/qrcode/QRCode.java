@@ -71,8 +71,8 @@ public final class QRCode {
      * 
      * @return QRCode 处理器
      */
-    public static QRCode build(final String content) {
-        return build(content, QRCodeFormat.build());
+    public static QRCode NEW(final String content) {
+        return NEW(content, QRCodeFormat.NEW());
     }
 
     /**
@@ -85,7 +85,7 @@ public final class QRCode {
      * 
      * @return QRCode 处理器
      */
-    public static QRCode build(final String content, QRCodeFormat format) {
+    public static QRCode NEW(final String content, QRCodeFormat format) {
         QRCode qrcode = new QRCode();
         qrcode.format = format;
         qrcode.qrcodeImage = toQRCode(content, format);
@@ -95,13 +95,13 @@ public final class QRCode {
     /**
      * 把指定的内容生成为一个 QRCode 的图片，之后保存到指定的文件中。
      * 
-     * @param qrcodeFile
+     * @param f
      *            指定的文件
      * 
      * @return QRCode 处理器
      */
-    public QRCode toQRCodeFile(String qrcodeFile) {
-        return toQRCodeFile(new File(qrcodeFile));
+    public QRCode toFile(String f) {
+        return toFile(new File(f));
     }
 
     /**
@@ -112,14 +112,16 @@ public final class QRCode {
      * 
      * @return QRCode 处理器
      */
-    public QRCode toQRCodeFile(File qrcodeFile) {
+    public QRCode toFile(File qrcodeFile) {
         try {
             if (!qrcodeFile.exists()) {
                 qrcodeFile.getParentFile().mkdirs();
                 qrcodeFile.createNewFile();
             }
 
-            if (!ImageIO.write(this.qrcodeImage, this.format.getImageFormat(), qrcodeFile)) {
+            if (!ImageIO.write(this.qrcodeImage,
+                               this.format.getImageFormat(),
+                               qrcodeFile)) {
                 throw new RuntimeException();
             }
         }
@@ -140,8 +142,8 @@ public final class QRCode {
      * 
      * @return QRCode 处理器
      */
-    public QRCode toQRCodeFile(String qrcodeFile, String appendFile) {
-        return toQRCodeFile(new File(qrcodeFile), new File(appendFile));
+    public QRCode toFile(String qrcodeFile, String appendFile) {
+        return toFile(new File(qrcodeFile), new File(appendFile));
     }
 
     /**
@@ -154,7 +156,7 @@ public final class QRCode {
      * 
      * @return QRCode 处理器
      */
-    public QRCode toQRCodeFile(File qrcodeFile, File appendFile) {
+    public QRCode toFile(File qrcodeFile, File appendFile) {
         try {
             if (!qrcodeFile.exists()) {
                 qrcodeFile.getParentFile().mkdirs();
@@ -162,7 +164,9 @@ public final class QRCode {
             }
 
             appendImage(this.qrcodeImage, ImageIO.read(appendFile), this.format);
-            if (!ImageIO.write(this.qrcodeImage, this.format.getImageFormat(), qrcodeFile)) {
+            if (!ImageIO.write(this.qrcodeImage,
+                               this.format.getImageFormat(),
+                               qrcodeFile)) {
                 throw new RuntimeException("Unexpected error writing image");
             }
         }
@@ -173,7 +177,9 @@ public final class QRCode {
         return this;
     }
 
-    private void appendImage(BufferedImage baseImage, BufferedImage appendImage, QRCodeFormat format) {
+    private void appendImage(BufferedImage baseImage,
+                             BufferedImage appendImage,
+                             QRCodeFormat format) {
         Graphics gc = baseImage.getGraphics();
         gc.drawImage(appendImage,
                      (baseImage.getWidth() - appendImage.getWidth()) / 2,
@@ -206,7 +212,7 @@ public final class QRCode {
      */
     public static BufferedImage toQRCode(String content, QRCodeFormat format) {
         if (format == null) {
-            format = QRCodeFormat.build();
+            format = QRCodeFormat.NEW();
         }
 
         content = new String(content.getBytes(Charset.forName(format.getEncode())));
@@ -226,7 +232,9 @@ public final class QRCode {
         int height = matrix.getHeight();
         int fgColor = format.getForeGroundColor().getRGB();
         int bgColor = format.getBackGroundColor().getRGB();
-        BufferedImage image = new BufferedImage(width, height, ColorSpace.TYPE_RGB);
+        BufferedImage image = new BufferedImage(width,
+                                                height,
+                                                ColorSpace.TYPE_RGB);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 image.setRGB(x, y, matrix.get(x, y) ? fgColor : bgColor);
@@ -243,16 +251,17 @@ public final class QRCode {
      * 
      * @return QRCode 中的内容
      */
-    public static String fromQRCode(String qrcodeFile) {
-        if (qrcodeFile.startsWith("http://") || qrcodeFile.startsWith("https://")) {
+    public static String from(String qrcodeFile) {
+        if (qrcodeFile.startsWith("http://")
+            || qrcodeFile.startsWith("https://")) {
             try {
-                return fromQRCode(new URL(qrcodeFile));
+                return from(new URL(qrcodeFile));
             }
             catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
         } else {
-            return fromQRCode(new File(qrcodeFile));
+            return from(new File(qrcodeFile));
         }
     }
 
@@ -264,10 +273,10 @@ public final class QRCode {
      * 
      * @return QRCode 中的内容
      */
-    public static String fromQRCode(File qrcodeFile) {
+    public static String from(File qrcodeFile) {
         try {
             BufferedImage image = ImageIO.read(qrcodeFile);
-            return fromQRCode(image);
+            return from(image);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -282,10 +291,10 @@ public final class QRCode {
      * 
      * @return QRCode 中的内容
      */
-    public static String fromQRCode(URL qrcodeUrl) {
+    public static String from(URL qrcodeUrl) {
         try {
             BufferedImage image = ImageIO.read(qrcodeUrl);
-            return fromQRCode(image);
+            return from(image);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -300,7 +309,7 @@ public final class QRCode {
      * 
      * @return QRCode 中的内容
      */
-    public static String fromQRCode(BufferedImage qrcodeImage) {
+    public static String from(BufferedImage qrcodeImage) {
         LuminanceSource source = new BufferedImageLuminanceSource(qrcodeImage);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
         String content = null;

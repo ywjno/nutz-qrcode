@@ -11,35 +11,35 @@
 BufferedImage image = QRCode.toQRCode("this's simple text.");
 
 // 或者通过构造器模式
-QRCode qrcode = QRCode.build("this's simple text by used build method.");
+QRCode qrcode = QRCode.NEW("this's simple text by used build method.");
 
 // 获得 QRCode 的图像对象
 BufferedImage image = qrcode.getQrcodeImage();
 
 // 在指定路径的文件中生成一个 QRCode 的图片，图片格式为 jpg
 String filePath = "/PATH/TO/FILE";
-qrcode.toQRCodeFile(filePath);
+qrcode.toFile(filePath);
 
 // 或者直接指定一个 File 对象
 File file = new File(filePath);
-qrcode.toQRCodeFile(file);
+qrcode.toFile(file);
 ```
 
 默认使用如下参数生成 QRCode，
 
-* 图片大小: 140px
+* 图片大小: 256 x 256 像素
 * 内容编码格式: UTF-8
 * 错误修正等级: Level M (有15% 的内容可被修正)
 * 前景色: 黑色
 * 背景色: 白色
 * 输出图片的文件格式: jpg
-* 图片空白区域大小: 4个单位
+* 图片空白区域大小: 0个单位
 
 如需修改生成参数，请使用`QRCodeFormat`类来实现，比如
 
 ```java
 // 生成一个带有默认值的生成器格式
-QRCodeFormat format = QRCodeFormat.build();
+QRCodeFormat format = QRCodeFormat.NEW();
 
 // 改变生成器格式的值
 format.setSize(400) // 设置图片大小
@@ -48,7 +48,7 @@ format.setSize(400) // 设置图片大小
     .setForeGroundColor("#2F4F4F") // 设置前景色
     .setBackGroundColor("#808080") // 设置背景色
     .setImageFormat("png") // 设置生成的图片格式
-    .setMargin("2") // 设置图片空白区域（外填充）
+    .setMargin(0) // 设置图片空白区域, 单位iwei格（外填充）
 
 // 然后
 // 使用指定的生成器格式生成一个 QRCode 的图像对象
@@ -56,23 +56,23 @@ BufferedImage image = QRCode.toQRCode("this's simple text by used format.", form
 
 // 或者
 // 使用指定的生成器格式生成一个 QRCode 构造器
-QRCode qrcode = QRCode.build("this's simple test text by used format.", format);
+QRCode qrcode = QRCode.NEW("this's simple test text by used format.", format);
 ```
 
 另外能给生成的 QRCode 的中添加上指定的图片
 
 ```java
-QRCode qrcode = QRCode.build("this's simple test text. and add icon file.");
+QRCode qrcode = QRCode.NEW("this's simple test text. and add icon file.");
 
 // 在指定路径的文件中生成 QRCode 的图片，以及需要添加的 icon 的图片路径
 String filePath = "/PATH/TO/FILE";
 String iconFilePath = "/PATH/TO/ICON_FILE";
-qrcode.toQRCodeFile(filePath, iconFilePath);
+qrcode.toFile(filePath, iconFilePath);
 
 // 或者直接使用 File 对象
 File file = new File(filePath);
 File iconFile = new File(iconFilePath);
-qrcode.toQRCodeFile(file, iconFile);
+qrcode.toFile(file, iconFile);
 ```
 
 为了保证生成的 QRCode 的图片能被正确识别，请按需设置 QRCode 的图片大小，以及 icon 图片的大小。
@@ -82,23 +82,23 @@ qrcode.toQRCodeFile(file, iconFile);
 ```java
 // 图片路径
 String filePath = "/PATH/TO/FILE";
-String content = QRCode.fromQRCode(filePath);
+String content = QRCode.from(filePath);
 
 // 或者直接传入文件对象
 File file = new File(filePath);
-content = QRCode.fromQRCode(file);
+content = QRCode.from(file);
 
 // 或者 QRCode 图像对象
 BufferedImage image = ImageIO.read(file);
-content = QRCode.fromQRCode(image);
+content = QRCode.from(image);
 
 // 支持直接解析 QRCode 图片的 URL 地址（以「http」或者「https」开头）
 String url = "https://chart.googleapis.com/chart?chs=72x72&cht=qr&choe=UTF-8&chl=http%3A%2F%2Fwww.nutz.cn%2F";
-content = QRCode.fromQRCode(url);
+content = QRCode.from(url);
 
 // 或者该地址的对象
 URL imageUrl = new URL(url);
-content = QRCode.fromQRCode(imageUrl);
+content = QRCode.from(imageUrl);
 ```
 
 ### 其他

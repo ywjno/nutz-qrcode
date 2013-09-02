@@ -52,18 +52,18 @@ public class QRCodeFormat {
      * 
      * @return QRCode 生成器格式
      */
-    public static QRCodeFormat build() {
+    public static QRCodeFormat NEW() {
         return new QRCodeFormat();
     }
 
     private QRCodeFormat() {
-        this.size = 140;
+        this.size = 256;
         this.encode = "UTF-8";
         this.errorCorrectionLevel = ErrorCorrectionLevel.M;
         this.foreGroundColor = Color.BLACK;
         this.backGroundColor = Color.WHITE;
         this.imageFormat = "jpg";
-        this.margin = 4;
+        this.margin = 0;
         this.hints = new Hashtable<EncodeHintType, Object>();
     }
 
