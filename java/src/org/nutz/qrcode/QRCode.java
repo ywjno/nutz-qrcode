@@ -120,7 +120,7 @@ public final class QRCode {
             }
 
             if (!ImageIO.write(this.qrcodeImage,
-                               this.format.getImageFormat(),
+                               getSuffixName(qrcodeFile),
                                qrcodeFile)) {
                 throw new RuntimeException();
             }
@@ -165,7 +165,7 @@ public final class QRCode {
 
             appendImage(this.qrcodeImage, ImageIO.read(appendFile), this.format);
             if (!ImageIO.write(this.qrcodeImage,
-                               this.format.getImageFormat(),
+                               getSuffixName(qrcodeFile),
                                qrcodeFile)) {
                 throw new RuntimeException("Unexpected error writing image");
             }
@@ -327,5 +327,18 @@ public final class QRCode {
             throw new RuntimeException(e);
         }
         return content;
+    }
+
+    private String getSuffixName(File file) {
+        String path = file.getAbsolutePath();
+
+        if (null == path) {
+            return this.format.getImageFormat();
+        }
+        int pos = path.lastIndexOf('.');
+        if (-1 == pos) {
+            return this.format.getImageFormat();
+        }
+        return path.substring(pos + 1).toUpperCase();
     }
 }

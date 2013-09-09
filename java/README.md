@@ -17,7 +17,8 @@ QRCode qrcode = QRCode.NEW("this's simple text by used build method.");
 BufferedImage image = qrcode.getQrcodeImage();
 
 // 在指定路径的文件中生成一个 QRCode 的图片，图片格式为 png
-String filePath = "/PATH/TO/FILE";
+// 如果指定的文件没有扩展名，将生成一个扩展名为 png 的图片
+String filePath = "/PATH/TO/FILE.jpg";
 qrcode.toFile(filePath);
 
 // 或者直接指定一个 File 对象
