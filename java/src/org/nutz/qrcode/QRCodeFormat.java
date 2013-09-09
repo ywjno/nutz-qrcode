@@ -41,13 +41,13 @@ public class QRCodeFormat {
      * 创建一个带有默认值的 QRCode 生成器的格式。默认值如下
      * 
      * <ul>
-     * <li>图片大小: 140px</li>
+     * <li>图片大小: 256px</li>
      * <li>内容编码格式: UTF-8</li>
      * <li>错误修正等级: Level M (有15% 的内容可被修正)</li>
      * <li>前景色: 黑色</li>
      * <li>背景色: 白色</li>
      * <li>输出图片的文件格式: jpg</li>
-     * <li>图片空白区域大小: 4个单位</li>
+     * <li>图片空白区域大小: 0个单位</li>
      * </ul>
      * 
      * @return QRCode 生成器格式
