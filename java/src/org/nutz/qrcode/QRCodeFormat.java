@@ -46,7 +46,7 @@ public class QRCodeFormat {
      * <li>错误修正等级: Level M (有15% 的内容可被修正)</li>
      * <li>前景色: 黑色</li>
      * <li>背景色: 白色</li>
-     * <li>输出图片的文件格式: jpg</li>
+     * <li>输出图片的文件格式: png</li>
      * <li>图片空白区域大小: 0个单位</li>
      * </ul>
      * 
@@ -62,7 +62,7 @@ public class QRCodeFormat {
         this.errorCorrectionLevel = ErrorCorrectionLevel.M;
         this.foreGroundColor = Color.BLACK;
         this.backGroundColor = Color.WHITE;
-        this.imageFormat = "jpg";
+        this.imageFormat = "png";
         this.margin = 0;
         this.hints = new Hashtable<EncodeHintType, Object>();
     }

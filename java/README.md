@@ -16,7 +16,7 @@ QRCode qrcode = QRCode.NEW("this's simple text by used build method.");
 // 获得 QRCode 的图像对象
 BufferedImage image = qrcode.getQrcodeImage();
 
-// 在指定路径的文件中生成一个 QRCode 的图片，图片格式为 jpg
+// 在指定路径的文件中生成一个 QRCode 的图片，图片格式为 png
 String filePath = "/PATH/TO/FILE";
 qrcode.toFile(filePath);
 
@@ -32,7 +32,7 @@ qrcode.toFile(file);
 * 错误修正等级: Level M (有15% 的内容可被修正)
 * 前景色: 黑色
 * 背景色: 白色
-* 输出图片的文件格式: jpg
+* 输出图片的文件格式: png
 * 图片空白区域大小: 0个单位
 
 如需修改生成参数，请使用`QRCodeFormat`类来实现，比如
@@ -47,7 +47,7 @@ format.setSize(400) // 设置图片大小
     .setErrorCorrectionLevel('H') // 设置错误修正等级
     .setForeGroundColor("#2F4F4F") // 设置前景色
     .setBackGroundColor("#808080") // 设置背景色
-    .setImageFormat("png") // 设置生成的图片格式
+    .setImageFormat("jpg") // 设置生成的图片格式
     .setMargin(0) // 设置图片空白区域, 单位 - 格（外填充）
 
 // 然后
